@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vyre — one partner. wearing every hat. $33 a day.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #120A2E;
+    --bg-mid: #1F1247;
+    --bg-deep: #0C0620;
+    --white: #FFFFFF;
+    --white-90: rgba(255, 255, 255, 0.92);
+    --white-70: rgba(255, 255, 255, 0.72);
+    --white-50: rgba(255, 255, 255, 0.5);
+    --white-30: rgba(255, 255, 255, 0.3);
+    --coral: #FF6B7A;
+    --coral-soft: #FF8F9F;
+    --electric: #5FB5FF;
+    --violet: #9D6BFF;
+    --lime: #B8FF5C;
+    --glass: rgba(255, 255, 255, 0.025);
+    --glass-strong: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-strong: rgba(255, 255, 255, 0.18);
+    --shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 24px 80px rgba(0, 0, 0, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  ::selection { background: var(--coral); color: var(--bg-deep); }
+
+  body {
+    background: var(--bg-base);
+    color: var(--white);
+    font-family: 'Geist', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* ===== Gradient background with blurred orbs ===== */
+  .bg-mesh {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at top, #2A1458 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg-base) 0%, var(--bg-mid) 40%, var(--bg-base) 80%, var(--bg-deep) 100%);
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+
+  .orb-coral-1 {
+    width: 620px; height: 620px;
+    background: radial-gradient(circle, var(--coral) 0%, transparent 65%);
+    top: 8%; right: -12%;
+    opacity: 0.55;
+    animation: drift1 25s ease-in-out infinite;
+  }
+  .orb-violet {
+    width: 580px; height: 580px;
+    background: radial-gradient(circle, var(--violet) 0%, transparent 65%);
+    top: 25%; left: -15%;
+    opacity: 0.45;
+    animation: drift2 30s ease-in-out infinite;
+  }
+  .orb-blue-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, var(--electric) 0%, transparent 65%);
+    top: 55%; right: 8%;
+    opacity: 0.32;
+    animation: drift3 28s ease-in-out infinite;
+  }
+  .orb-coral-2 {
+    width: 540px; height: 540px;
+    background: radial-gradient(circle, var(--coral) 0%, transparent 65%);
+    top: 85%; left: 10%;
+    opacity: 0.4;
+    animation: drift1 32s ease-in-out infinite reverse;
+  }
+  .orb-violet-2 {
+    width: 460px; height: 460px;
+    background: radial-gradient(circle, var(--violet) 0%, transparent 65%);
+    top: 130%; right: -10%;
+    opacity: 0.4;
+    animation: drift2 26s ease-in-out infinite reverse;
+  }
+  .orb-blue-2 {
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, var(--electric) 0%, transparent 65%);
+    top: 170%; left: -10%;
+    opacity: 0.35;
+    animation: drift3 30s ease-in-out infinite;
+  }
+  .orb-coral-3 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, var(--coral) 0%, transparent 65%);
+    top: 210%; right: 5%;
+    opacity: 0.4;
+    animation: drift1 28s ease-in-out infinite;
+  }
+
+  @keyframes drift1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(60px, 40px) scale(1.1); } }
+  @keyframes drift2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-50px, 70px) scale(1.08); } }
+  @keyframes drift3 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -60px) scale(1.12); } }
+
+  /* Noise grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.12;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  /* Floating decorative spheres */
+  .sphere {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .sphere-sm {
+    width: 14px; height: 14px;
+  }
+  .sphere-md {
+    width: 22px; height: 22px;
+  }
+  .sphere-lg {
+    width: 34px; height: 34px;
+  }
+
+  .sphere-coral {
+    background: radial-gradient(circle at 30% 30%, var(--coral-soft), var(--coral) 60%, #B04050);
+    box-shadow: 0 0 30px rgba(255, 107, 122, 0.6);
+  }
+  .sphere-blue {
+    background: radial-gradient(circle at 30% 30%, #9FD3FF, var(--electric) 60%, #2E6BB8);
+    box-shadow: 0 0 30px rgba(95, 181, 255, 0.6);
+  }
+  .sphere-violet {
+    background: radial-gradient(circle at 30% 30%, #C5A5FF, var(--violet) 60%, #5B3099);
+    box-shadow: 0 0 30px rgba(157, 107, 255, 0.6);
+  }
+
+  .display {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+  }
+
+  .mono {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ========= NAV ========= */
+  nav {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    padding: 0.75rem 0.85rem 0.75rem 1.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: calc(100% - 2rem);
+    max-width: 980px;
+  }
+
+  .logo {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: -0.04em;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .logo-dot {
+    width: 9px;
+    height: 9px;
+    background: var(--coral);
+    border-radius: 50%;
+    box-shadow: 0 0 16px var(--coral);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    list-style: none;
+    margin-left: auto;
+  }
+
+  .nav-links a {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--white-70);
+    transition: color 0.25s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--white) !important;
+    color: var(--bg-deep) !important;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  .nav-cta:hover {
+    background: var(--coral) !important;
+    color: var(--white) !important;
+  }
+
+  /* ========= HERO ========= */
+  .hero {
+    min-height: 100vh;
+    padding: 9rem 2rem 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    color: var(--white);
+    margin-bottom: 2rem;
+    animation: fadeUp 1s ease-out 0.15s both;
+  }
+
+  .hero h1 .accent-word {
+    position: relative;
+    display: inline-block;
+    color: var(--coral);
+  }
+
+  .hero-sub {
+    max-width: 46ch;
+    font-size: 1.08rem;
+    color: var(--white-70);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1s ease-out 0.3s both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    animation: fadeUp 1s ease-out 0.45s both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.1rem 2rem;
+    background: var(--white);
+    color: var(--bg-deep);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.15);
+  }
+
+  .btn-primary:hover {
+    background: var(--coral);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 46px rgba(255, 107, 122, 0.4);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--white);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--white-30);
+    transition: all 0.3s;
+  }
+
+  .btn-ghost:hover {
+    border-bottom-color: var(--coral);
+    color: var(--coral);
+  }
+
+  /* ===== Hero visual: stacked glass cards ===== */
+  .hero-visual {
+    position: relative;
+    height: 520px;
+    animation: fadeIn 1.4s ease-out 0.5s both;
+  }
+
+  .glass-card-big {
+    position: absolute;
+    width: 100%;
+    max-width: 460px;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    animation: floatCard 6s ease-in-out infinite;
+  }
+
+  .glass-card-big.card-1 {
+    top: 30px;
+    right: 20px;
+    transform: rotate(-4deg);
+    background: linear-gradient(135deg, rgba(255, 107, 122, 0.1), rgba(255, 255, 255, 0.02));
+  }
+
+  .glass-card-big.card-2 {
+    top: 220px;
+    right: 60px;
+    transform: rotate(3deg);
+    animation-delay: -3s;
+    background: linear-gradient(135deg, rgba(95, 181, 255, 0.08), rgba(255, 255, 255, 0.02));
+  }
+
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); }
+    50% { transform: translateY(-12px) rotate(var(--rot, -4deg)); }
+  }
+
+  .glass-card-big.card-1 { --rot: -4deg; }
+  .glass-card-big.card-2 { --rot: 3deg; }
+
+  .card-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--white-50);
+    margin-bottom: 0.6rem;
+  }
+
+  .card-stat {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.03em;
+  }
+
+  .card-sub {
+    color: var(--white-70);
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  .card-icon-row {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card-pill {
+    padding: 0.35rem 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    color: var(--white-90);
+    font-weight: 500;
+  }
+
+  /* Hero floating spheres */
+  .hero-visual .sphere-1 { top: 10px; left: 10%; }
+  .hero-visual .sphere-2 { top: 35%; left: -5%; }
+  .hero-visual .sphere-3 { bottom: 15%; right: 0%; }
+  .hero-visual .sphere-4 { bottom: -5%; left: 30%; }
+  .hero-visual .sphere-5 { top: 55%; right: 12%; }
+
+  /* ========= SECTIONS ========= */
+  section.block {
+    padding: 4rem 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.1rem;
+    background: var(--glass);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--white-70);
+    margin-bottom: 2rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--coral);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--coral);
+  }
+
+  .section-head {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--white);
+    max-width: 1000px;
+    margin-bottom: 2rem;
+  }
+
+  .section-head .accent-word {
+    color: var(--coral);
+  }
+
+  /* ========= WHO ========= */
+  .who-card {
+    padding: 3.5rem 3.5rem;
+    background: rgba(255, 255, 255, 0.025);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 32px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .who-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--white-30), transparent);
+  }
+
+  .who-stat {
+    position: relative;
+  }
+
+  .who-stat .stat-num {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 0.9;
+    color: var(--coral);
+    display: block;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.04em;
+  }
+
+  .who-stat .stat-label {
+    color: var(--white-70);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 30ch;
+  }
+
+  .who-text { display: flex; flex-direction: column; gap: 1.4rem; max-width: 72ch; }
+  .who-text p { font-size: 1.15rem; line-height: 1.65; color: var(--white-90); }
+  .who-text p:last-child { color: var(--white-70); font-size: 1.05rem; }
+
+  /* ========= SERVICES ========= */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.3rem;
+  }
+
+  .service-card {
+    padding: 2.2rem 2rem 2.5rem;
+    background: rgba(255, 255, 255, 0.025);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--white-30), transparent);
+  }
+
+  .service-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .service-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--coral), #B04050);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.3rem;
+    font-size: 1.4rem;
+    color: var(--white);
+    box-shadow: 0 8px 24px rgba(255, 107, 122, 0.3);
+  }
+
+  .service-card:nth-child(2) .service-icon { background: linear-gradient(135deg, var(--violet), #5B3099); box-shadow: 0 8px 24px rgba(157, 107, 255, 0.3); }
+  .service-card:nth-child(3) .service-icon { background: linear-gradient(135deg, var(--electric), #2E6BB8); box-shadow: 0 8px 24px rgba(95, 181, 255, 0.3); }
+  .service-card:nth-child(4) .service-icon { background: linear-gradient(135deg, var(--coral), var(--violet)); }
+  .service-card:nth-child(5) .service-icon { background: linear-gradient(135deg, var(--electric), var(--violet)); }
+  .service-card:nth-child(6) .service-icon { background: linear-gradient(135deg, var(--coral), var(--electric)); }
+  .service-card:nth-child(7) .service-icon { background: linear-gradient(135deg, var(--violet), var(--coral)); }
+  .service-card:nth-child(8) .service-icon { background: linear-gradient(135deg, var(--electric), var(--coral)); }
+  .service-card:nth-child(9) .service-icon { background: linear-gradient(135deg, var(--violet), var(--electric)); }
+
+  .service-num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--white-50);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: 1.55rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+  }
+
+  .service-desc { font-size: 0.93rem; line-height: 1.6; color: var(--white-70); }
+
+  /* ========= MANIFESTO ========= */
+  .manifesto {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .manifesto-card {
+    padding: 5rem 3rem;
+    background: rgba(255, 255, 255, 0.025);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .manifesto-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--white-30), transparent);
+  }
+
+  .manifesto-quote {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--white);
+  }
+
+  .manifesto-quote .accent-word { color: var(--coral); }
+
+  .manifesto-attr {
+    margin-top: 2.5rem;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--white-50);
+  }
+
+  /* ========= PRICING ========= */
+  .pricing-sub {
+    max-width: 58ch;
+    color: var(--white-70);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 4rem;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.3rem;
+  }
+
+  .price-card {
+    padding: 2.5rem 2.2rem;
+    background: rgba(255, 255, 255, 0.025);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .price-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--white-30), transparent);
+  }
+
+  .price-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .price-card.featured {
+    background: linear-gradient(165deg, rgba(255, 107, 122, 0.12), rgba(157, 107, 255, 0.06));
+    border: 1px solid rgba(255, 107, 122, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0 24px 80px rgba(255, 107, 122, 0.15);
+  }
+
+  .price-card.featured:hover {
+    transform: translateY(-14px);
+  }
+
+  .price-tier {
+    color: var(--white-50);
+    margin-bottom: 1rem;
+  }
+
+  .price-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: 2.4rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+
+  .price-card.featured .price-name { color: var(--coral); }
+
+  .price-for {
+    font-size: 0.95rem;
+    color: var(--white-70);
+    line-height: 1.55;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 1px solid var(--glass-border);
+    min-height: 4.5rem;
+  }
+
+  .price-features { list-style: none; flex: 1; margin-bottom: 0; }
+
+  .price-features li {
+    padding: 0.6rem 0 0.6rem 1.8rem;
+    position: relative;
+    font-size: 0.93rem;
+    color: var(--white-90);
+    line-height: 1.5;
+  }
+
+  .price-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.9rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 107, 122, 0.15);
+    border: 1px solid var(--coral);
+  }
+
+  .price-features li::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1.15rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--coral);
+  }
+
+  .price-cta {
+    display: block;
+    text-align: center;
+    padding: 1rem 1.5rem;
+    background: var(--glass-strong);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--white);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .price-cta:hover {
+    background: var(--white);
+    color: var(--bg-deep);
+    border-color: var(--white);
+  }
+
+  .price-card.featured .price-cta {
+    background: var(--white);
+    color: var(--bg-deep);
+    border-color: var(--white);
+  }
+
+  .price-card.featured .price-cta:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: var(--white);
+  }
+
+  /* ========= CONTACT ========= */
+  .contact-card {
+    padding: 4rem 3.5rem;
+    background: rgba(255, 255, 255, 0.025);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    box-shadow: var(--shadow-lg);
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--white-30), transparent);
+  }
+
+  .contact-head {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--white);
+  }
+
+  .contact-head .accent-word { color: var(--coral); }
+
+  .contact-sub {
+    margin-top: 1.8rem;
+    color: var(--white-70);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 38ch;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.4rem; }
+
+  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .form-field label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--white-50);
+    font-weight: 600;
+    font-family: 'Geist Mono', monospace;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.95rem 1.2rem;
+    font-family: 'Geist', sans-serif;
+    font-size: 1rem;
+    color: var(--white);
+    border-radius: 14px;
+    transition: all 0.3s;
+  }
+
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: var(--white-30); }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--coral);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .form-field textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    background: var(--white);
+    color: var(--bg-deep);
+    border: none;
+    padding: 1.1rem 2rem;
+    border-radius: 999px;
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 0.8rem;
+    transition: all 0.3s;
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+  }
+
+  .form-submit:hover {
+    background: var(--coral);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(255, 107, 122, 0.4);
+  }
+
+  /* ========= FOOTER ========= */
+  footer { padding: 4rem 2rem 2rem; position: relative; }
+
+  .footer-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 3rem 3rem 2rem;
+    background: rgba(255, 255, 255, 0.025);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .footer-brand p {
+    margin-top: 1rem;
+    max-width: 36ch;
+    line-height: 1.55;
+    color: var(--white-70);
+    font-size: 0.92rem;
+  }
+
+  .footer-col h4 {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--white-50);
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+  }
+
+  .footer-col a {
+    display: block;
+    color: var(--white-70);
+    padding: 0.3rem 0;
+    font-size: 0.92rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--coral); }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--white-50);
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (max-width: 900px) {
+    nav { padding: 0.6rem 0.6rem 0.6rem 1.2rem; gap: 0.8rem; }
+    .nav-links { gap: 0.6rem; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .logo { font-size: 1.3rem; }
+    .nav-cta { padding: 0.6rem 1.1rem; font-size: 0.78rem; }
+
+    .hero {
+      padding: 8rem 1.2rem 3rem;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 10vw, 3.6rem); }
+    .hero-sub { font-size: 1rem; }
+    .hero-ctas { gap: 1rem; }
+    .btn-primary, .btn-ghost { font-size: 0.9rem; }
+
+    /* Hero visual: center the floating cards on mobile */
+    .hero-visual { height: 520px; width: 100%; max-width: 360px; margin: 0 auto; }
+    .glass-card-big {
+      max-width: 320px;
+      padding: 1.5rem;
+      right: auto !important;
+      left: 50%;
+      animation: none;
+    }
+    .glass-card-big.card-1 { top: 20px; transform: translateX(-50%) rotate(-4deg); }
+    .glass-card-big.card-1:hover { transform: translateX(-50%) rotate(-4deg); }
+    .glass-card-big.card-2 { top: 300px; transform: translateX(-50%) rotate(3deg); }
+    .card-stat { font-size: 2.4rem; }
+    .card-pill { padding: 0.3rem 0.7rem; font-size: 0.7rem; }
+
+    /* Contain spheres to the visual area */
+    .hero-visual .sphere-1 { top: 0; left: 15%; }
+    .hero-visual .sphere-2 { top: 30%; left: 2%; }
+    .hero-visual .sphere-3 { bottom: 10%; right: 5%; }
+    .hero-visual .sphere-4 { bottom: 0%; left: 40%; }
+    .hero-visual .sphere-5 { top: 50%; right: 8%; }
+
+    section.block { padding: 3rem 1.2rem; }
+    .section-head { font-size: clamp(1.9rem, 7vw, 3rem); margin-bottom: 1.5rem; }
+    .who-card { padding: 2.5rem 1.8rem; }
+    .who-text p { font-size: 1rem; }
+    .who-text p:last-child { font-size: 0.95rem; }
+
+    .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .service-name { font-size: 1.4rem; }
+
+    .pricing-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+    .price-card.featured { transform: none; }
+    .price-card.featured:hover { transform: translateY(-6px); }
+    .price-name { font-size: 2rem; }
+
+    .contact-card { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 1.8rem; }
+    .contact-head { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+
+    .manifesto { padding: 3rem 1.2rem; }
+    .manifesto-card { padding: 2.5rem 1.8rem; }
+    .manifesto-quote { font-size: clamp(1.5rem, 5vw, 2rem); }
+
+    .footer-inner { padding: 2.5rem 1.8rem 1.5rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; padding-top: 1.5rem; text-align: center; }
+
+    /* Dial down background orbs on mobile for performance */
+    .orb { filter: blur(60px); }
+  }
+
+  @media (max-width: 480px) {
+    nav {
+      padding: 0.55rem 0.5rem 0.55rem 1rem;
+      gap: 0.5rem;
+      top: 0.75rem;
+      width: calc(100% - 1.5rem);
+    }
+    .logo { font-size: 1.2rem; }
+    .nav-cta { padding: 0.55rem 0.9rem; font-size: 0.72rem; }
+
+    .hero { padding: 6.5rem 1rem 2rem; gap: 2rem; }
+    .hero h1 { font-size: clamp(2.1rem, 10.5vw, 2.8rem); }
+    .hero-sub { font-size: 0.95rem; margin-bottom: 1.8rem; }
+    .btn-primary { padding: 0.9rem 1.5rem; }
+    .btn-ghost { padding: 0.4rem 0; }
+
+    .hero-visual { height: 480px; width: 100%; max-width: 300px; }
+    .glass-card-big { max-width: 280px; padding: 1.3rem; }
+    .glass-card-big.card-2 { top: 270px; }
+    .card-stat { font-size: 2rem; }
+    .card-label { font-size: 0.6rem; }
+    .card-sub { font-size: 0.82rem; }
+    .card-pill { padding: 0.28rem 0.6rem; font-size: 0.65rem; }
+
+    section.block { padding: 2.5rem 1rem; }
+    .section-label { font-size: 0.65rem; padding: 0.4rem 0.9rem; }
+    .section-head { font-size: clamp(1.7rem, 8vw, 2.4rem); }
+
+    .who-card, .contact-card, .manifesto-card { padding: 2rem 1.3rem; border-radius: 24px; }
+    .service-card, .price-card { padding: 1.8rem 1.5rem; border-radius: 20px; }
+    .service-name { font-size: 1.3rem; }
+    .service-desc { font-size: 0.88rem; }
+    .price-name { font-size: 1.8rem; }
+
+    .manifesto { padding: 2rem 1rem; }
+    .footer-inner { padding: 2rem 1.3rem 1.2rem; border-radius: 20px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-mesh">
+  <div class="orb orb-coral-1"></div>
+  <div class="orb orb-violet"></div>
+  <div class="orb orb-blue-1"></div>
+  <div class="orb orb-coral-2"></div>
+  <div class="orb orb-violet-2"></div>
+  <div class="orb orb-blue-2"></div>
+  <div class="orb orb-coral-3"></div>
+</div>
+
+<nav>
+  <div class="logo">vyre<span class="logo-dot"></span></div>
+  <ul class="nav-links">
+    <li><a href="#who">Who</a></li>
+    <li><a href="#what">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Let's connect</a></li>
+  </ul>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>
+      One partner.<br>
+      <span class="accent-word">Wearing every hat</span><br>
+      your business needs.
+    </h1>
+    <p class="hero-sub">vyre is a full-service operations and growth partner for small businesses — handling everything from brand to hiring to marketing. Instead of contracting three or four specialists, you get one operator who does it all.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Let's connect →</a>
+      <a href="#what" class="btn-ghost">See what we do</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!-- Floating spheres -->
+    <div class="sphere sphere-lg sphere-coral sphere-1"></div>
+    <div class="sphere sphere-md sphere-blue sphere-2"></div>
+    <div class="sphere sphere-lg sphere-violet sphere-3"></div>
+    <div class="sphere sphere-sm sphere-coral sphere-4"></div>
+    <div class="sphere sphere-md sphere-blue sphere-5"></div>
+
+    <!-- Glass card 1 -->
+    <div class="glass-card-big card-1">
+      <div class="card-label">One partner, every function</div>
+      <div class="card-stat">9+ roles.</div>
+      <div class="card-sub">One operator handling all of it — from AI to hiring.</div>
+      <div class="card-icon-row">
+        <span class="card-pill">AI</span>
+        <span class="card-pill">Brand</span>
+        <span class="card-pill">Web</span>
+        <span class="card-pill">Hiring</span>
+        <span class="card-pill">More</span>
+      </div>
+    </div>
+
+    <!-- Glass card 2 -->
+    <div class="glass-card-big card-2">
+      <div class="card-label">Instead of 3–4 specialists</div>
+      <div class="card-stat">$33<span style="font-size: 1.2rem; color: var(--white-70); font-weight: 400;">/day</span></div>
+      <div class="card-sub">Less than the cost of a single contractor.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHO ========== -->
+<section class="block" id="who">
+  <div class="section-label">Who we work with</div>
+  <h2 class="section-head">
+    Founders and business owners<br>
+    doing <span class="accent-word">too much</span> with too little.
+  </h2>
+
+  <div class="who-card">
+    <div class="who-text">
+      <p>You're running a real business. Real revenue, real customers, a real reason you started this. What you don't have is a marketing team, an ops lead, a brand designer, a recruiter, and an AI consultant — and frankly, you shouldn't need five different vendors to run a small business.</p>
+      <p>vyre is one operator who handles all of it. Built and run by someone who's operated multiple small businesses, generated $500K+ in revenue, and has a decade of working with major brands. AI-native, hands-on, and built for the way small businesses actually work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SERVICES ========== -->
+<section class="block" id="what">
+  <div class="section-label">What we do</div>
+  <h2 class="section-head">
+    Every function of your business,<br>
+    handled by <span class="accent-word">one partner.</span>
+  </h2>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">✦</div>
+      <div class="service-num">01 / AI</div>
+      <h3 class="service-name">AI &amp; Automation</h3>
+      <p class="service-desc">AI-native from day one. The automations that actually save hours — customer workflows, content pipelines, data cleanup, internal tools.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✧</div>
+      <div class="service-num">02 / Brand</div>
+      <h3 class="service-name">Brand &amp; Content</h3>
+      <p class="service-desc">A decade of working with major brands, applied to yours. Positioning, voice, visual identity, and the content that shows up everywhere.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">◆</div>
+      <div class="service-num">03 / Web</div>
+      <h3 class="service-name">Website Build</h3>
+      <p class="service-desc">Fast, custom-built sites hosted on modern infrastructure. No Squarespace. No drag-and-drop. Just code that does what you need.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">❋</div>
+      <div class="service-num">04 / Ops</div>
+      <h3 class="service-name">Business Systems</h3>
+      <p class="service-desc">Workflows, SOPs, tools, documentation. The plumbing that turns a chaotic business into one that runs without you holding it up.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">➤</div>
+      <div class="service-num">05 / BD</div>
+      <h3 class="service-name">Lead Gen &amp; BD</h3>
+      <p class="service-desc">Outbound systems and pipeline building. Stop relying on word of mouth. Built to feed you leads without burning you on ad spend.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✉</div>
+      <div class="service-num">06 / Marketing</div>
+      <h3 class="service-name">Email &amp; Social</h3>
+      <p class="service-desc">Newsletters, sequences, social content — written in your voice and scheduled so you're never the bottleneck.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">♦</div>
+      <div class="service-num">07 / Team</div>
+      <h3 class="service-name">Hiring</h3>
+      <p class="service-desc">Sourcing, interviewing, placement. We find the right people for the role — and vet them before they ever hit your inbox.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">◉</div>
+      <div class="service-num">08 / CX</div>
+      <h3 class="service-name">Customer Success</h3>
+      <p class="service-desc">Onboarding flows and retention playbooks. The follow-through most small businesses never get around to building.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✺</div>
+      <div class="service-num">09 / Support</div>
+      <h3 class="service-name">Ongoing Support</h3>
+      <p class="service-desc">Everything vyre builds, vyre maintains. The operator who built it is the one who keeps it running.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MANIFESTO ========== -->
+<section class="manifesto">
+  <div class="manifesto-card">
+    <p class="manifesto-quote">
+      You don't need a bigger team. You need <span class="accent-word">someone who's done it before</span> — and isn't afraid to roll up their sleeves.
+    </p>
+    <div class="manifesto-attr">— The vyre way</div>
+  </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section class="block" id="pricing">
+  <div class="section-label">Packages</div>
+  <h2 class="section-head">
+    Three ways to work together.<br>
+    <span class="accent-word">Starting at $33 a day.</span>
+  </h2>
+  <p class="pricing-sub">Instead of hiring three or four specialists, you get one operator running it all. Scoping depends on what your business actually needs — let's talk about it.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier mono">Tier 01</div>
+      <h3 class="price-name">Foundation</h3>
+      <p class="price-for">For businesses that need to get their house in order.</p>
+      <ul class="price-features">
+        <li>Basic AI implementation</li>
+        <li>Brand identity &amp; content</li>
+        <li>Website build</li>
+        <li>Business systems &amp; organization</li>
+        <li>Monthly strategy call</li>
+        <li>Email &amp; messaging support</li>
+        <li>Custom services as needed</li>
+      </ul>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-tier mono">Tier 02</div>
+      <h3 class="price-name">Growth</h3>
+      <p class="price-for">For businesses ready to scale.</p>
+      <ul class="price-features">
+        <li>Everything in Foundation</li>
+        <li>Advanced AI &amp; automation</li>
+        <li>Lead gen &amp; BD systems</li>
+        <li>Email &amp; social content</li>
+        <li>Hiring — sourcing &amp; placement</li>
+        <li>Bi-weekly calls</li>
+        <li>2 active projects at a time</li>
+        <li>Custom services as needed</li>
+      </ul>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tier mono">Tier 03</div>
+      <h3 class="price-name">Operator</h3>
+      <p class="price-for">For businesses that want vyre running alongside them.</p>
+      <ul class="price-features">
+        <li>Everything in Growth</li>
+        <li>Ongoing management of all systems</li>
+        <li>Customer success &amp; onboarding mgmt</li>
+        <li>Priority response &amp; access</li>
+        <li>Weekly calls</li>
+        <li>Custom services as needed</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section class="block" id="contact">
+  <div class="contact-card">
+    <div>
+      <div class="section-label">Get in touch</div>
+      <h2 class="contact-head">
+        Let's talk about <span class="accent-word">what's actually on your plate.</span>
+      </h2>
+      <p class="contact-sub">No sales pitch. No assessment phase. No $3,000 "discovery" engagement. Just a conversation about where you are and whether we can help.</p>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" placeholder="Jane Rivera" />
+      </div>
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="jane@yourbusiness.com" />
+      </div>
+      <div class="form-field">
+        <label for="biz">What do you do?</label>
+        <input type="text" id="biz" placeholder="Run a coffee shop in Plano" />
+      </div>
+      <div class="form-field">
+        <label for="msg">What's weighing on you?</label>
+        <textarea id="msg" placeholder="The one thing that would make next month easier..."></textarea>
+      </div>
+      <button type="button" class="form-submit" onclick="alert('Thanks — demo form. Wire up to Formspree, Resend, or Supabase.')">Send it over →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">vyre<span class="logo-dot"></span></div>
+        <p>A full-service operations and growth partner for small businesses. One operator, every hat, starting at $33 a day.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#who">Who we work with</a>
+        <a href="#what">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Elsewhere</h4>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">Email</a>
+      </div>
+      <div class="footer-col">
+        <h4>Based in</h4>
+        <a href="#">Plano, TX</a>
+        <a href="#">Working worldwide</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 vyre</span>
+      <span>One partner. Every hat.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
