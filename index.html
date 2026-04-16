@@ -847,6 +847,25 @@
     max-width: 38ch;
   }
 
+  .contact-cta-line {
+    margin-top: 1.5rem;
+    color: var(--white-70);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .contact-cta-line a {
+    color: var(--white);
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .contact-cta-line a:hover {
+    color: var(--coral);
+    border-bottom-color: var(--coral);
+  }
+
   .contact-form { display: flex; flex-direction: column; gap: 1.4rem; }
 
   .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -1304,6 +1323,9 @@
         Let's talk about <span class="accent-word">what's actually on your plate.</span>
       </h2>
       <p class="contact-sub">No sales pitch. No assessment phase. No $3,000 "discovery" engagement. Just a conversation about where you are and whether we can help.</p>
+      <p class="contact-cta-line">
+        Fill out the form below or email directly: <a href="mailto:nick@vyre.help">nick@vyre.help</a>
+      </p>
     </div>
 
     <form class="contact-form" action="https://formspree.io/f/xqegjbkl" method="POST">
@@ -1349,7 +1371,7 @@
         <h4>Elsewhere</h4>
         <a href="#">LinkedIn</a>
         <a href="#">Instagram</a>
-        <a href="#">Email</a>
+        <a href="mailto:nick@vyre.help">nick@vyre.help</a>
       </div>
       <div class="footer-col">
         <h4>Based in</h4>
